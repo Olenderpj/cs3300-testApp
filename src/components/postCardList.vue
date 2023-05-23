@@ -26,7 +26,7 @@ import { getAllPosts } from "../../Database/Tables/posts";
  */
 export default {
   name: "postCardList",
-  // Data stores the default variables
+  // Data stores the default variables.
   data(){
     return {
       databaseResponse: {},
