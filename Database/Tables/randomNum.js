@@ -7,9 +7,7 @@ const tableName = 'randomNum'
 
 // Similar to SQL command of SELECT * FROM <table>
 export async function getAllRandomNumbers(){
-    let data = await supabaseClient().from('randomNum').select()
-    console.log(data)
-    return data
+    return supabaseClient().from(`${tableName}`).select();
 }
 export async function addNewRandomNumber(value){
     return await supabaseClient.from(tableName).insert({randomNum: `${value}`})
