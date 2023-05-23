@@ -1,18 +1,27 @@
 <template>
-  <home-view />
+  <v-app>
+      <v-btn @click="toggleTheme">toggle theme</v-btn>
+    <home-view/>
+  </v-app>
 </template>
 
 <script>
-
-import homeView from "@/views/HomeView.vue";
+import HomeView from "@/views/HomeView.vue";
+import { useTheme } from 'vuetify'
 
 export default {
   name: 'App',
   components: {
-    homeView
+    HomeView
   },
-  data: () => ({
-    //
-  }),
+  setup () {
+    const theme = useTheme()
+    theme.global.name.value = 'dark'
+
+    return {
+      theme,
+      toggleTheme: () => theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+    }
+  },
 }
 </script>

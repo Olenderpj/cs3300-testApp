@@ -1,61 +1,53 @@
 <template>
-  <p>This is a test</p>
-  <v-alert>{{errorMessage}}</v-alert>
-  <v-card>
-    <v-card-text> {{ response }}</v-card-text>
-    <v-btn @click="fetchData">Get Server Data</v-btn>
-    <v-card-text> {{ randomNum }}</v-card-text>
+  <v-container fluid width="90" class="d-flex justify-center">
+  <v-col>
     <v-row>
-      <v-col><v-btn @click="getNewNum">Get new integer</v-btn></v-col>
-      <v-col><v-btn @click="pushData">Push data to DB</v-btn></v-col>
+      <v-alert width="90" type="error" :text="errorMessage" color="red darken-2"></v-alert>
     </v-row>
-    <v-btn @click="clearData">Clear all data in the database</v-btn>
-  </v-card>
+    <v-row>
+      <v-container fluid >
+        <v-row>
+        <v-col class="d-flex justify-center">
+          <v-card outlined width="90%" class="mx-2">
+            <v-card-title class="d-flex justify-center">TITLE 1</v-card-title>
+            <v-card-text>THIS IS SOME CARD TEXT LORUM IPSUM......</v-card-text>
+          </v-card>
+        </v-col>
+        <v-col class="d-flex justify-center">
+        <v-card outlined width="90%" class="mx-2">
+          <v-card-title class="d-flex justify-center">TITLE 2</v-card-title>
+            <div class="d-flex flex-row">
+              <v-icon size="small">mdi-pin-outline</v-icon>
+              <v-card-text>THIS IS SOME CARD TEXT LORUM IPSUM......</v-card-text>
+            </div>
+        </v-card>
+        </v-col>
+        </v-row>
+      </v-container>
+    </v-row>
+  </v-col>
+
+
+
+  </v-container>
 </template>
 
 <script>
-
-import { createClient } from '@supabase/supabase-js'
-// Create a single supabase client for interacting with your database
-const supabase = createClient('https://njgrneffovjfbuwoatqo.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qZ3JuZWZmb3ZqZmJ1d29hdHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ3MjIyMzEsImV4cCI6MjAwMDI5ODIzMX0.WRxf7UrgshyN_O6IZSoFRI8K2xPCi6ifm1NTPEVRjLc')
-
+import { getAllRandomNumbers } from '../../Database/Tables/randomNum.js'
 
 export default {
   name: 'HomeView',
   data() {
     return {
       response: undefined,
-      errorMessage: undefined,
+      errorMessage: "TEST",
       randomNum: undefined
     }
   },
   methods:{
-    async fetchData() {
-      const {data, error} = await supabase
-          .from('randomNum')
-          .select()
-
-      if (!data){
-        this.response = {}
-        this.errorMessage = error
-      }
-        this.response = data
-    },
-    async pushData(){
-      if (!this.randomNum) {
-        this.errorMessage = "No VALUE exists for randomNum"
-      }
-      const { error } = await supabase
-          .from('randomNum')
-          .insert({ randomNum: this.randomNum })
-      this.errorMessage = error
-    },
-    async clearData(){
-      const { error } = await supabase
-          .from('randomNum')
-          .delete().neq('randomNum', 0)
-      this.errorMessage = error
-
+    // this needs error handling
+    async getData(){
+      this.response = await getAllRandomNumbers()
     },
     getNewNum(){
       this.randomNum =  Math.floor(Math.random() * 100000)
@@ -63,3 +55,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.debug {
+  border: 1px solid red;
+}
+</style>
