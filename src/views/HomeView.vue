@@ -16,16 +16,20 @@
         <v-col class="d-flex justify-center">
         <v-card outlined width="90%" class="mx-2">
           <v-card-title class="d-flex justify-center">TITLE 2</v-card-title>
-            <div class="d-flex flex-row">
-              <v-icon size="small">mdi-pin-outline</v-icon>
+            <div class="d-flex justify-center">
               <v-card-text>THIS IS SOME CARD TEXT LORUM IPSUM......</v-card-text>
             </div>
         </v-card>
         </v-col>
         </v-row>
       </v-container>
+
+    </v-row>
+    <v-row>
+      <post-card-list />
     </v-row>
   </v-col>
+
 
 
 
@@ -33,10 +37,19 @@
 </template>
 
 <script>
+// database import
 import { getAllRandomNumbers } from '../../Database/Tables/randomNum.js'
 
+// Component import
+import postCardList from "@/components/postCardList.vue";
+
+
+/**
+ * Component Docs
+ */
 export default {
   name: 'HomeView',
+  components: {postCardList},
   data() {
     return {
       response: undefined,
